@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Header() {
   return (
     <header>
-      <h1 className="main-tit">리액트 공부용</h1>
+      <h1 className="main-tit">Todo List</h1>
       <Nav />
     </header>
   );
