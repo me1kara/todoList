@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import loginStyles from './login.module.css';  // CSS 모듈
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 function Login() {
   const [userId, setUserId] = useState('');
@@ -16,13 +16,18 @@ function Login() {
       // 백엔드 API로 로그인 요청
       const response = await axios.post('http://localhost:5000/login', {
         userId: userId,
-        userPassword: userPassword,
-      });
-
+        userPassword: userPassword
+      }, { 
+        withCredentials: true  // 쿠키 전송 허용
+      }
+    );
       // 로그인 성공 시
       setMessage(response.data.message);
-      //window.location.pathname = '/todo';
-      navigate('/todo'); 
+      alert(response.data.message);
+      if(response.data.status == 'S'){
+        navigate('/todo'); 
+      }
+
     } catch (error) {
       // 로그인 실패 시
       setMessage(error.response.data.message);
@@ -51,7 +56,7 @@ function Login() {
                     <button data-mdb-button-init data-mdb-ripple-init className="btn btn-info btn-lg text-light btn-block" type="submit">Login</button>
                   </div>
                   <p className="small mb-5 pb-lg-2"><a className="text-muted" href="#!">회원정보를 잊어버리셨나요?</a></p>
-                  <p>회원이 아니신가요? <a href="#!" className="link-info">회원가입</a></p>
+                  <p>회원이 아니신가요? <Link className="link-info" to="/register">회원가입</Link></p>
                 </form>
               </div>
             </div>

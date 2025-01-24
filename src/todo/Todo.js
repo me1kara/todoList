@@ -14,7 +14,9 @@ function Todo() {
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/todo/list', { userId: 'admin' });
+      const response = await axios.post('http://localhost:5000/todo/list', {},{ 
+        withCredentials: true // 쿠키 포함
+    });
       setTodos(response.data); // 응답 데이터를 todos에 설정
     } catch (error) {
       console.log("호출 도중 에러 발생:", error);
@@ -25,6 +27,8 @@ function Todo() {
     try{
       const reponse = await axios.post('http://localhost:5000/todo/delete',{
         _id : _id
+      },{ 
+        withCredentials: true // 쿠키 포함
       });
       alert(reponse.data.message);
       fetchTodos();
@@ -37,6 +41,8 @@ function Todo() {
     try{
       const reponse = await axios.post('http://localhost:5000/todo/deleteMany',{
         _ids : _ids
+      },{ 
+        withCredentials: true // 쿠키 포함
       });
       alert(reponse.data.message);
       fetchTodos();
@@ -55,9 +61,10 @@ function Todo() {
       try {
         // 백엔드 API로 로그인 요청
         const response = await axios.post('http://localhost:5000/todo/insert', {
-          userId: 'admin',
           insertDate : dateInput,
           content : input
+        },{ 
+          withCredentials: true // 쿠키 포함
         });
         if(response.data.status == 'S'){
           alert('등록에 성공했습니다.');
